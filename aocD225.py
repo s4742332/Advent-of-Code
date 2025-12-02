@@ -11,15 +11,20 @@ with open("IDs.txt", "r") as file:
         full_ID = range(int(first_ID), (int(last_ID)+1)) #Range between IDs
         for full_number in full_ID: #For each inidividual number in the range of IDS
                 full_number = str(full_number) #conver to string
-                if len(full_number)%2 != 0: #if the entire string is odd in length
-                    continue
-                # all examples are double around the mid point, this also prevents double ups (e.g. 8x1 and 4x2 in a 22222222 ID)
-                mid = len(full_number) //2
-                if full_number[:mid] == full_number[mid:]:
-                    print(full_number)
-                    code += int(full_number)
+                found = False
+                for size in range(1, len(full_number)//2+1): #checks for each size of number inside the full number
+                    if len(full_number)%size!=0: 
+                          continue
+                    block = full_number[:size] #different blocks of numbers from original number
+
+                    if block * (len(full_number)//size) == full_number: #check if the entire string is the block repeated by a number of times
+                        print(full_number)
+                        code += int(full_number)
+                        found = True
+                        break
+                   
                 
-    print(code)
+print(code)
                                  
                                  
                                 
