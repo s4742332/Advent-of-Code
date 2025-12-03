@@ -1,6 +1,6 @@
 output = 0
 
-with open("testD3.txt", "r") as file:
+with open("joltage.txt", "r") as file:
     allbanks = file.read().split() # Read file, convert to list of str
     alljoltage = []
     for bank in allbanks: #for each battery bank
