@@ -40,7 +40,7 @@ def replace_toilet(grid, found_places):
     return grid
 
 
-with open("testD4.txt", "r") as file:
+with open("warehouse.txt", "r") as file:
     g = file.read().strip() #strip the file of any unwanted guests
     lines = int(g.count('\n') +1) #how many lines
     allg = list(g.replace('\n', ''))
