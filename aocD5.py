@@ -13,19 +13,27 @@ def get_ranges(everything):
                     ranges.append(int(x[0:(y)]))
                     ranges.append(int(x[(y+1):len(x)]))
                 else: continue
-    #print("Ranges:", ranges)
+    print("Ranges:", ranges)
     #print("IDs:", IDs)
     return ranges, IDs
 
 def total_possible_fresh(ranges):
     all_ranges = []
-    for i in range(1, len(ranges),2):
-        for k in range(int(ranges[i-1]), int(ranges[i]+1)):
-            if k not in all_ranges:
-                all_ranges.append(k)
-    return len(all_ranges)
+    total = 0
+    for i in range(1, len(ranges),2): #need to rearrange the info for sorting properly
+        all_ranges.append((int(ranges[i-1]), int(ranges[i])))
+    all_ranges.sort() #rearrange so that all the ranges are in order
+    
+    current_highest = -1
+    for a,b in all_ranges: #for a given range in all_ranges
+        if current_highest>=a: #are we starting inside a previously investigated range?
+            a = current_highest +1  #start at the next unseen number
+        if a<=b: #if it is in the range, and there is stuff new in the range we haven't seen it before
+            total += b-a +1 # add the total numbers in any given range
+        current_highest = max(current_highest,b) #ensure that current is updated to the end of the interval
+    return total
 
-with open("testD5.txt", "r") as file:
+with open("groceries.txt", "r") as file:
     everything = file.read().split('\n') #seperate by liens
     ranges, IDs = get_ranges(everything)
     fresh =0
