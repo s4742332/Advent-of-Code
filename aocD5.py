@@ -18,22 +18,39 @@ def get_ranges(everything):
     return ranges, IDs
 
 
+
 with open("testD5.txt", "r") as file:
     everything = file.read().split('\n') #seperate by liens
     ranges, IDs = get_ranges(everything)
     fresh =0
     spoiled = 0
-    for i in range(1, len(ranges), 2):
-        for id in IDs:
-            k =int(id)
-            place = IDs.index(id)
-            if k in range(ranges[i-1], (ranges[i]+1)):
+    list_fresh = []
+    list_spoiled = []
+
+    for id in IDs:
+        print(id)
+        k = int(id)
+        place = IDs.index(id)
+        for i in range(1, len(ranges),2):
+            if int(ranges[i-1]) <= k < (int(ranges[i])+1):
                 fresh +=1
-                print("Fresh:", ranges[i-1], ranges[i],":", id)
-                IDs.pop(place)
+                print("Fresh:", int(ranges[i-1]),int(ranges[i]),":", id)
+                list_fresh.append(id)
+                #IDs.pop(place)
+                break
             else:
-                print("Spoiled:", ranges[i-1], ranges[i],":", id)
+                print("Spoiled:",int(ranges[i-1]),int(ranges[i]),":", id)
+                continue
+        if id not in list_fresh:
+            list_spoiled.append(id)
+    #print(hasduplicates(sorted(list_fresh))) proves no duplicates in list
+    print("All IDs:", IDs)
+    print("All Fresh:", list_fresh)
+    print("All Spoiled:", list_spoiled)
     print("Total Fresh", fresh)
+            
+
+            
 
     
     
