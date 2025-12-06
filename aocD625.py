@@ -1,23 +1,42 @@
-with open("testD6.txt", "r") as file:
-    everything = file.read().split()
-    one = everything[0:len(everything)//4]
-    two = everything[len(everything)//4:len(everything)//2]
-    three = everything[len(everything)//2:3*(len(everything)//4)]
-    operation = everything[3*(len(everything)//4):len(everything)]
+def init(data, rows, columns):
+    list_ = []
+    length = 0
+    for i in range(rows-1):
+        list_.append(data[length:(columns//rows)+length])
+        length += columns//rows
+        i+=1
+    operation = data[length:(columns//rows)+length]
+    return list_, operation
 
-    #print(one)
-    #print(two)
-    #print(three)
+with open("testD6.txt", "r") as file:
+    everything = file.read()
+    rows = everything.split("\n")
+    everything = everything.split()
+    #print(len(rows))
+    list_, operation = init(everything, len(rows), len(everything))
+    #print(list_)
     #print(operation)
+    #print(len(list_[0]))
     total = 0
-    for i in range(0, len(one)):
+    for i in range(0, len(list_[0])):
         if operation[i] == "+":
-            total += int(one[i]) +int(two[i])+int(three[i])
+            current = 0
+            for j in list_:
+                current += int(j[i])
+            #total += int(one[i]) +int(two[i])+int(three[i])
             #print("Added:",one[i], two[i],three[i]) 
+            total+=current
+            continue
         elif operation[i] == "*":
-            total += int(one[i]) *int(two[i])*int(three[i])
+            current = 1
+            for j in list_:
+                current = current * int(j[i])
+            #total += int(one[i]) *int(two[i])*int(three[i])
             #print("Multiplied:",one[i], two[i],three[i]) 
+            total+=current
+            continue
         else:
-            print("No Operation")
+            #print("No Operation:",one[i], two[i],three[i])
+            continue
     print("Total:", total)
     
